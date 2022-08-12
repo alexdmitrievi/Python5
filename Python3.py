@@ -3,21 +3,44 @@
 
 
 
-def compression():
-    f = open('full.txt', 'r')
-    o = open('comressed.txt', 'w')
-    s = ''
-    for i in f.read():
-        if s == '': 
-            s = i
-        elif s[0] == i:
-            s += i  
-        else:
-            o.write(s[0] + str(len(s)))
-            s = ''
 
-    o.write(s[0] + str(len(s)))
+def compression(): # создали функцию, которая будет сжимать файл
+    f = open('full.txt', 'r') # открыли файл для чтения
+    o = open('comressed.txt', 'w') # открыли файл для записи
+    s = '' # создали переменлную и положили в неё пустоту
+    for i in f.read(): # идеём по файлу ф 
+        if s == '': # ветвление для того, чтобы определять, пустая строка или нет, если да, то кладём элементы из файла в пустую строку
+            s = i
+        elif s[0] == i: # если последующая буква соответствует предыдущей, то добавляем её в строку
+            s += i  
+        else: 
+            if len(s) == 1:
+                o.write(s[0])
+            else:     
+                o.write(s[0] + str(len(s)))
+            s = i
+    #print(s)
+    #o.write(s[0])
     f.close
     o.close
 
-compression()
+def dec():
+    f = open('full.txt', 'w') # открыли файл для записи
+    o = open('comressed.txt', 'r') # открыли файл для чтения
+    s = ''
+    for i in o.read():
+        if s == '':
+            s = i
+        elif i.isdigit() == True:
+            s *= int(i)
+            f.write(s)
+            s = ''
+        else:
+            f.write(s + i)
+            s = ''
+    f.write(s)
+dec()
+#compression()
+
+
+
